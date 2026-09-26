@@ -2593,7 +2593,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
   const MB_CSS = 'https://api.mapbox.com/mapbox-gl-js/v3.30.0/mapbox-gl.css';
   /* Pega aquí tu token público de Mapbox (empieza normalmente por pk.). También puedes definir
      window.MAPBOX_ACCESS_TOKEN antes de este script para no escribirlo en el archivo. */
-  const MAPBOX_ACCESS_TOKEN = window.MAPBOX_ACCESS_TOKEN || 'PON_AQUI_TU_MAPBOX_ACCESS_TOKEN';
+  const MAPBOX_ACCESS_TOKEN = window.MAPBOX_ACCESS_TOKEN || 'pk.eyJ1Ijoia2VuZHJ5ayIsImEiOiJjbXVqMDRtbHQwYzQ1MnhxMHR3NG1rendzIn0.Go1mD060fIivfbspJqTZMA';
   const ESTILO_MAPBOX = 'mapbox://styles/mapbox/standard';
   /* Mapbox Standard incorpora edificios 3D, fachadas, árboles, hitos y sombras.
      En la vista plana los ocultamos; al entrar en caminata se activan con la misma cartografía. */
@@ -2832,7 +2832,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
      queda el mapa Leaflet de siempre como respaldo. */
   async function iniciar(){
     if(activo) return true;
-    if(!MAPBOX_ACCESS_TOKEN || MAPBOX_ACCESS_TOKEN==='PON_AQUI_TU_MAPBOX_ACCESS_TOKEN'){
+    if(!MAPBOX_ACCESS_TOKEN){
       if(!mlMapTokenAvisado){ mlMapTokenAvisado=true; aviso('Falta el token de Mapbox. Completa MAPBOX_ACCESS_TOKEN en este archivo.'); }
       return false;
     }
