@@ -324,7 +324,7 @@
     .grip{display:none}
     #panel .top{padding-top:12px}
   }
-  /* ===== Modo caminata: vista inclinada 3D (Mapbox GL JS) ===== */
+  /* ===== Modo caminata: vista inclinada 3D (MapLibre GL) ===== */
   #nav3d{position:absolute;inset:0;z-index:999;background:#e8e4dc;opacity:0;visibility:hidden;transition:opacity .35s,visibility 0s .35s}
   #nav3d.on{opacity:1;visibility:visible;transition:opacity .35s,visibility 0s}
   #nav3d .mapa{position:absolute;inset:0}
@@ -336,7 +336,7 @@
   #nav3d .nav-seg svg{width:18px;height:18px;display:block}
   #nav3d .nav-brujula svg{transition:transform .2s linear}
   .nav-lbl{pointer-events:none}
-  #nav3d .mapboxgl-popup{z-index:10}   /* popups (manzana y notas) siempre por encima de letras, números y notas */
+  #nav3d .maplibregl-popup{z-index:10}   /* popups (manzana y notas) siempre por encima de letras, números y notas */
   .nav-nota{font-size:26px;line-height:32px;width:32px;height:32px;text-align:center;cursor:pointer;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
   #nav3d.placing .mapa canvas{cursor:crosshair}
   #nav3d .nav-recentrar{bottom:24px;left:50%;transform:translateX(-50%);height:44px;padding:0 20px;background:#1a73e8;color:#fff;display:none}
@@ -349,7 +349,7 @@
     filter:drop-shadow(0 1px 2px rgba(0,0,0,.6)) drop-shadow(0 0 1px rgba(0,0,0,.35));opacity:0;transform-origin:5px 15px;transition:opacity .2s}
   .nav-puck.rumbo .flecha{opacity:1}
   .nav-puck .punto{position:absolute;left:21px;top:21px;width:18px;height:18px;border-radius:50%;background:#1a73e8;border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45);box-sizing:border-box}
-  /* Popup de manzana en el mapa normal: mismas proporciones que en el modo caminata (Mapbox) */
+  /* Popup de manzana en el mapa normal: mismas proporciones que en el modo caminata (MapLibre) */
   .leaflet-popup.pop-mz .leaflet-popup-content-wrapper{padding:0;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.1),0 3px 14px rgba(0,0,0,.25)}
   .leaflet-popup.pop-mz .leaflet-popup-content{margin:0;padding:15px 10px;font:12px/20px "Helvetica Neue",Arial,Helvetica,sans-serif}
   .leaflet-popup.pop-mz .leaflet-popup-tip-container{width:20px;height:10px;margin-left:-10px}
@@ -357,17 +357,17 @@
   /* Modo caminata: el mapa no se mueve mientras el menú de territorios (capas) está abierto */
   #nav3d .nav-bloqueo{position:absolute;inset:0;z-index:1;display:none;background:transparent;touch-action:none}
   #nav3d .nav-bloqueo.on{display:block}
-  /* Mapbox es el mapa visible (modo normal y caminata). Leaflet queda debajo solo con su lógica y sus botones. */
+  /* MapLibre es el mapa visible (modo normal y caminata). Leaflet queda debajo solo con su lógica y sus botones. */
   #map.ml-on .leaflet-map-pane{visibility:hidden}
   #map.ml-on .leaflet-control-attribution{display:none}
   #nav3d:not(.caminando) .nav-seg,#nav3d:not(.caminando) .nav-recentrar{display:none}
-  #nav3d .mapboxgl-canvas{outline:none}
+  #nav3d .maplibregl-canvas{outline:none}
   /* Borde igual al de los botones laterales (2px negro translúcido, esquinas de 4px) en popups y menús */
-  #nav3d .mapboxgl-popup-content,.leaflet-popup-content-wrapper,.leaflet-popup.pop-mz .leaflet-popup-content-wrapper{
+  #nav3d .maplibregl-popup-content,.leaflet-popup-content-wrapper,.leaflet-popup.pop-mz .leaflet-popup-content-wrapper{
     border:2px solid rgba(0,0,0,.2);border-radius:4px;background-clip:padding-box;box-shadow:none}
   /* Piquito del popup con el mismo borde en sus dos lados inclinados (no en el lado que une con el cuadro).
      Se dibuja encima del cuadro y lo tapa 2px para borrar ahí el borde del cuadro. */
-  #nav3d .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip{align-self:center;position:relative;z-index:1;width:28px;height:15px;
+  #nav3d .maplibregl-popup-anchor-bottom .maplibregl-popup-tip{align-self:center;position:relative;z-index:1;width:28px;height:15px;
     margin-top:-2px;border:0;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2728%27%20height%3D%2715%27%20viewBox%3D%270%200%2028%2015%27%3E%3Cpath%20d%3D%27M2%200L14%2013L26%200%27%20fill%3D%27none%27%20stroke%3D%27rgba%280%2C0%2C0%2C.2%29%27%20stroke-width%3D%274%27%20stroke-linejoin%3D%27round%27/%3E%3Cpolygon%20points%3D%272%2C0%2026%2C0%2014%2C13%27%20fill%3D%27%23fff%27/%3E%3C/svg%3E") no-repeat center top}
   .ctl-wrap .ctl-menu.leaflet-bar,#dlgTipo .nota-menu.leaflet-bar{
     border:2px solid rgba(0,0,0,.2);border-radius:4px;background-clip:padding-box;box-shadow:none}
@@ -399,10 +399,10 @@
   #dlgTipo .nota-menu.leaflet-bar a{font-weight:700}
   #btnGuardarNotas,#btnInforme{font-weight:700}
   /* Nota de Observación (⚠️): borde de franjas diagonales negras y amarillas, del mismo grosor (2px) */
-  #nav3d .mapboxgl-popup.pop-obs .mapboxgl-popup-content,.leaflet-popup.pop-obs .leaflet-popup-content-wrapper{
+  #nav3d .maplibregl-popup.pop-obs .maplibregl-popup-content,.leaflet-popup.pop-obs .leaflet-popup-content-wrapper{
     border:2px solid transparent;
     background:linear-gradient(#fff,#fff) padding-box,repeating-linear-gradient(-45deg,#111 0 5px,#f5c400 5px 10px) border-box}
-  #nav3d .mapboxgl-popup.pop-obs.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2728%27%20height%3D%2715%27%20viewBox%3D%270%200%2028%2015%27%3E%3Cdefs%3E%3Cpattern%20id%3D%27r%27%20width%3D%2710%27%20height%3D%2710%27%20patternUnits%3D%27userSpaceOnUse%27%20patternTransform%3D%27rotate%2845%29%27%3E%3Crect%20width%3D%275%27%20height%3D%2710%27%20fill%3D%27%23111%27%2F%3E%3Crect%20x%3D%275%27%20width%3D%275%27%20height%3D%2710%27%20fill%3D%27%23f5c400%27%2F%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Cpath%20d%3D%27M2%200L14%2013L26%200%27%20fill%3D%27none%27%20stroke%3D%27url%28%23r%29%27%20stroke-width%3D%274%27%20stroke-linejoin%3D%27round%27%2F%3E%3Cpolygon%20points%3D%272%2C0%2026%2C0%2014%2C13%27%20fill%3D%27%23fff%27%2F%3E%3C%2Fsvg%3E") no-repeat}
+  #nav3d .maplibregl-popup.pop-obs.maplibregl-popup-anchor-bottom .maplibregl-popup-tip{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2728%27%20height%3D%2715%27%20viewBox%3D%270%200%2028%2015%27%3E%3Cdefs%3E%3Cpattern%20id%3D%27r%27%20width%3D%2710%27%20height%3D%2710%27%20patternUnits%3D%27userSpaceOnUse%27%20patternTransform%3D%27rotate%2845%29%27%3E%3Crect%20width%3D%275%27%20height%3D%2710%27%20fill%3D%27%23111%27%2F%3E%3Crect%20x%3D%275%27%20width%3D%275%27%20height%3D%2710%27%20fill%3D%27%23f5c400%27%2F%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Cpath%20d%3D%27M2%200L14%2013L26%200%27%20fill%3D%27none%27%20stroke%3D%27url%28%23r%29%27%20stroke-width%3D%274%27%20stroke-linejoin%3D%27round%27%2F%3E%3Cpolygon%20points%3D%272%2C0%2026%2C0%2014%2C13%27%20fill%3D%27%23fff%27%2F%3E%3C%2Fsvg%3E") no-repeat}
   .leaflet-popup.pop-obs .leaflet-popup-tip{background:#fff;box-shadow:0 0 0 2px #f5c400}
   /* Pantalla de carga al abrir la app (máx. 3 s) */
   #pantallaCarga{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
@@ -645,11 +645,11 @@ const LIMITE_KM = 6.75;
 const AREA_BOUNDS = (()=>{ const c = {lat:-33.4192453, lng:-70.5337071};
   const dLat = LIMITE_KM/111.32, dLng = LIMITE_KM/(111.32*Math.cos(c.lat*Math.PI/180));
   return L.latLngBounds([c.lat-dLat,c.lng-dLng],[c.lat+dLat,c.lng+dLng]); })();
-// Vista inicial (al abrir la app) y del botón "centrar" en modo normal. ZOOM_INICIO en escala Leaflet (Mapbox = −1).
+// Vista inicial (al abrir la app) y del botón "centrar" en modo normal. ZOOM_INICIO en escala Leaflet (MapLibre = −1).
 const CENTRO_INICIO = [-33.4014499,-70.5196688];
-const ZOOM_INICIO = 14;   // = zoom 13 de Mapbox (un paso de "acercar" más que el alejamiento máximo)
-const ZOOM_CENTRAR = 15;  // botón centrar en modo normal = zoom 14 de Mapbox (igual que brújula/centrar en caminata)
-const ZOOM_MIN_L = 13;    // alejamiento máximo en escala Leaflet (= 12 de Mapbox)
+const ZOOM_INICIO = 14;   // = zoom 13 de MapLibre (un paso de "acercar" más que el alejamiento máximo)
+const ZOOM_CENTRAR = 15;  // botón centrar en modo normal = zoom 14 de MapLibre (igual que brújula/centrar en caminata)
+const ZOOM_MIN_L = 13;    // alejamiento máximo en escala Leaflet (= 12 de MapLibre)
 /* ---------- Sin "pop-in": polígonos ----------
    Leaflet simplifica cada polígono según el zoom (smoothFactor) y redondea sus vértices a píxeles enteros,
    por eso de lejos pierden forma y al acercarse "saltan" a la geometría completa.
@@ -2585,30 +2585,28 @@ window.addEventListener('drop',e=>importarArchivo(e.dataTransfer.files[0]));
 window.addEventListener('hashchange',abrirManzanaDeEnlace);
 
 /* ===================== Modo caminata: vista inclinada tipo Google Maps =====================
-   Al tocar el botón de caminar se abre, encima del mapa normal, un mapa 3D (Mapbox GL JS) inclinado
+   Al tocar el botón de caminar se abre, encima del mapa normal, un mapa 3D (MapLibre GL) inclinado
    que sigue tu ubicación y gira según hacia dónde miras / caminas. El mapa normal (Leaflet) queda
    intacto debajo con todas sus funciones; al salir se vuelve a él en el punto donde estabas. */
 (function(){
-  const MB_JS  = 'https://api.mapbox.com/mapbox-gl-js/v3.30.0/mapbox-gl.js';
-  const MB_CSS = 'https://api.mapbox.com/mapbox-gl-js/v3.30.0/mapbox-gl.css';
-  /* Pega aquí tu token público de Mapbox (empieza normalmente por pk.). También puedes definir
-     window.MAPBOX_ACCESS_TOKEN antes de este script para no escribirlo en el archivo. */
-  const MAPBOX_ACCESS_TOKEN = window.MAPBOX_ACCESS_TOKEN || 'pk.eyJ1Ijoia2VuZHJ5ayIsImEiOiJjbXVqMDRtbHQwYzQ1MnhxMHR3NG1rendzIn0.Go1mD060fIivfbspJqTZMA';
-  const ESTILO_MAPBOX = 'mapbox://styles/mapbox/standard';
-  /* Mapbox Standard incorpora edificios 3D, fachadas, árboles, hitos y sombras.
-     En la vista plana los ocultamos; al entrar en caminata se activan con la misma cartografía. */
+  const ML_JS  = 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.js';
+  const ML_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.css';
+  const ESTILO_OFM = 'https://tiles.openfreemap.org/styles/liberty';
+  /* Edificios: en 2D planos (estilo Liberty); en caminata se levantan en 3D (capas fill-extrusion del mismo estilo) */
   function aplicarModo3D(){
-    if(!mlMap || !mlMap.isStyleLoaded()) return;
-    try{ mlMap.setConfigProperty('basemap','show3dObjects',!!caminando); }catch(e){}
+    if(!mlMap || !mlMap.getStyle()) return;
+    (mlMap.getStyle().layers||[]).forEach(l=>{
+      if(l.type==='fill-extrusion') mlMap.setLayoutProperty(l.id,'visibility',caminando?'visible':'none');
+    });
   }
-  const DZ = 1;   // Mapbox mide el zoom con mundo de 512 px y Leaflet de 256: misma escala = zoom Leaflet − 1
-  const INCLINACION = 60, ZOOM_CAMINATA = 14;   // brújula y centrar en caminata: mismo zoom que centrar en modo normal (14 Mapbox)
+  const DZ = 1;   // MapLibre mide el zoom con mundo de 512 px y Leaflet de 256: misma escala = zoom Leaflet − 1
+  const INCLINACION = 60, ZOOM_CAMINATA = 14;   // brújula y centrar en caminata: mismo zoom que centrar en modo normal (14 MapLibre)
   const SVG_CAMINAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="1.8"/><path d="M9 21l2.5-6.5L14 16v5"/><path d="M11.5 14.5L12 9l-3.5 2-1 3.5"/><path d="M12 9l2.5 3 3 1"/></svg>';
   const SVG_BRUJULA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2.5 16 12 12 10.5 8 12" fill="currentColor"/><polyline points="8 12 12 21.5 16 12"/></svg>';
 
   const SVG_SALIR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
   let alNorte = false;   // tras el 1er toque de la brújula, el 2º toque vuelve a centrar y seguir
-  let cargando = null, mlMap = null, mlMapTokenAvisado = false, puck = null, puckEl = null, watchId = null;
+  let cargando = null, mlMap = null, puck = null, puckEl = null, watchId = null;
   let activo = false, caminando = false, siguiendo = false, pos = null, rumbo = null, rumboGps = null, ultimoGiro = 0;
   const cont = document.createElement('div');
   cont.id = 'nav3d';
@@ -2624,11 +2622,11 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
   const aviso = (txt,ms)=>{ const a=$('.nav-aviso'); a.textContent=txt; a.classList.add('ver'); clearTimeout(a._t); if(ms) a._t=setTimeout(()=>a.classList.remove('ver'),ms); };
 
   function cargarLib(){
-    if(window.mapboxgl) return Promise.resolve();
+    if(window.maplibregl) return Promise.resolve();
     if(cargando) return cargando;
     cargando = new Promise((res,rej)=>{
-      const l = document.createElement('link'); l.rel='stylesheet'; l.href=MB_CSS; document.head.appendChild(l);
-      const s = document.createElement('script'); s.src=MB_JS; s.onload=res; s.onerror=()=>{ cargando=null; rej(); };
+      const l = document.createElement('link'); l.rel='stylesheet'; l.href=ML_CSS; document.head.appendChild(l);
+      const s = document.createElement('script'); s.src=ML_JS; s.onload=res; s.onerror=()=>{ cargando=null; rej(); };
       document.head.appendChild(s);
     });
     return cargando;
@@ -2686,14 +2684,11 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
   }
 
   function crearMapa(centro,zoom,bearing){
-    mlMap = new mapboxgl.Map({
+    mlMap = new maplibregl.Map({
       container:$('.mapa'), center:centro, zoom, bearing, pitch:0, maxPitch:0,
       minZoom:12, maxZoom:21,
       attributionControl:{compact:true},
-      style:ESTILO_MAPBOX,
-      accessToken:MAPBOX_ACCESS_TOKEN,
-      config:{basemap:{show3dObjects:false}},
-      antialias:true
+      style:ESTILO_OFM
     });
     mlMap.on('zoomend',estadoZoomMas); mlMap.on('load',estadoZoomMas);
     /* Mapa de fondo: OpenFreeMap Liberty (vectorial). Encima se añaden las manzanas, por debajo de los nombres de calles.
@@ -2701,10 +2696,11 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
     let estiloOk = false;
     mlMap.on('style.load',()=>{
       estiloOk = true;
-      aplicarModo3D();
       if(!mlMap.getSource('mz')) mlMap.addSource('mz',{type:'geojson',data:manzanasGeoJSON()});
       if(!mlMap.getLayer('mz-fill')){
-        mlMap.addLayer({id:'mz-fill',type:'fill',source:'mz',slot:'middle',paint:{'fill-color':['get','relleno'],'fill-opacity':FILL_BASE,'fill-antialias':false}});
+        const primerTexto = (mlMap.getStyle().layers||[]).find(l=>l.type==='symbol');
+        mlMap.addLayer({id:'mz-fill',type:'fill',source:'mz',paint:{'fill-color':['get','relleno'],'fill-opacity':FILL_BASE,'fill-antialias':false}},
+          primerTexto ? primerTexto.id : undefined);
       }
       if(sel3D) marcarSel3D(sel3D);
       aplicarModo3D();
@@ -2716,7 +2712,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
     puckEl = document.createElement('div');
     puckEl.className = 'nav-puck';
     puckEl.innerHTML = '<div class="flecha"></div><div class="punto"></div>';
-    puck = new mapboxgl.Marker({element:puckEl,rotationAlignment:'map',pitchAlignment:'map'});
+    puck = new maplibregl.Marker({element:puckEl,rotationAlignment:'map',pitchAlignment:'map'});
     // Si el usuario mueve el mapa con el dedo, se deja de seguir (como en Google Maps) hasta pulsar "Recentrar"
     const soltar = e=>{ if(!caminando) return; if(e.originalEvent) alNorte = false; if(e.originalEvent && siguiendo){ siguiendo=false; $('.nav-recentrar').classList.add('ver'); } };
     mlMap.on('dragstart',soltar); mlMap.on('rotatestart',soltar); mlMap.on('pitchstart',soltar);
@@ -2732,7 +2728,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
     });
     mlMap.on('mouseenter','mz-fill',()=>{ mlMap.getCanvas().style.cursor='pointer'; });
     mlMap.on('mouseleave','mz-fill',()=>{ mlMap.getCanvas().style.cursor=''; });
-    // Todo movimiento de Mapbox se copia al mapa Leaflet oculto (su lógica usa centro, zoom y giro)
+    // Todo movimiento de MapLibre se copia al mapa Leaflet oculto (su lógica usa centro, zoom y giro)
     mlMap.on('moveend',e=>{
       if(e.desdeL) return;
       sincronizando = true;
@@ -2828,14 +2824,10 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
     if(watchId===null && 'geolocation' in navigator)
       watchId = navigator.geolocation.watchPosition(alPosicion,errPosicion,{enableHighAccuracy:true,maximumAge:1000,timeout:20000});
   }
-  /* Arranque: Mapbox GL JS pasa a ser el mapa visible en vista plana (modo normal). Si no carga (sin internet),
+  /* Arranque: MapLibre pasa a ser el mapa visible en vista plana (modo normal). Si no carga (sin internet),
      queda el mapa Leaflet de siempre como respaldo. */
   async function iniciar(){
     if(activo) return true;
-    if(!MAPBOX_ACCESS_TOKEN){
-      if(!mlMapTokenAvisado){ mlMapTokenAvisado=true; aviso('Falta el token de Mapbox. Completa MAPBOX_ACCESS_TOKEN en este archivo.'); }
-      return false;
-    }
     try{ await cargarLib(); }catch(e){ return false; }
     if(activo) return true;
     const c = map.getCenter();
@@ -2898,7 +2890,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
     if(b.classList.contains('ctl-centrar')){
       siguiendo = true;
       $('.nav-recentrar').classList.remove('ver');
-      seguir(true); // seguir() fija el zoom de centrado en 13 de Mapbox = 14 visible
+      seguir(true); // seguir() fija el zoom de centrado en 13 de MapLibre = 14 visible
     } else {
       const delta = b.classList.contains('leaflet-control-zoom-in') ? 1 : -1;
       const z = Math.max(12, mlMap.getZoom() + delta);
@@ -2906,7 +2898,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
     }
   },true);
   /* Botón «+» atenuado cuando ya no se puede acercar más (igual que «−» en el alejamiento máximo).
-     El mapa visible es Mapbox, así que el tope se mide con su zoom; sin él, con el de Leaflet. */
+     El mapa visible es MapLibre, así que el tope se mide con su zoom; sin él, con el de Leaflet. */
   function estadoZoomMas(){
     const b = map.zoomControl && map.zoomControl._zoomInButton; if(!b) return;
     const tope = (activo && mlMap) ? mlMap.getZoom() >= mlMap.getMaxZoom()-0.01 : map.getZoom() >= map.getMaxZoom()-0.01;
@@ -2955,7 +2947,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
     let mejor = [lngLat.lng,lngLat.lat], minY = Infinity;
     const g = f.geometry, anillos = g.type==='Polygon' ? g.coordinates : g.type==='MultiPolygon' ? g.coordinates.flat() : [];
     anillos.flat().forEach(c=>{ const y = mlMap.project(c).y; if(y<minY){ minY = y; mejor = c; } });
-    const pp = new mapboxgl.Popup({maxWidth:'260px',offset:4,anchor:'bottom',closeButton:false}).setLngLat(mejor).setDOMContent(html).addTo(mlMap);
+    const pp = new maplibregl.Popup({maxWidth:'260px',offset:4,anchor:'bottom',closeButton:false}).setLngLat(mejor).setDOMContent(html).addTo(mlMap);
     popMz3D = pp;
     centrarEnPopup(pp);
     pp.on('close',()=>{ if(popMz3D===pp){ popMz3D = null; marcarSel3D(null); } });
@@ -2972,7 +2964,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
       const ll = mk.getLatLng(), src = mk.options.icon.options;
       const el = document.createElement('div'); el.className = 'nav-lbl'; el.innerHTML = src.html;
       el.style.width = src.iconSize[0]+'px'; el.style.height = src.iconSize[1]+'px'; el.style.zIndex = z;
-      lbls3D.push(new mapboxgl.Marker({element:el}).setLngLat([ll.lng,ll.lat]).addTo(mlMap));
+      lbls3D.push(new maplibregl.Marker({element:el}).setLngLat([ll.lng,ll.lat]).addTo(mlMap));
     };
     mzMarkers.forEach(m=>poner(m,1)); terrMarkers.forEach(m=>poner(m,2));
   }
@@ -2981,7 +2973,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
   function abrirNota3D(n){
     if(!mlMap) return;
     if(pop3D) pop3D.remove();
-    pop3D = new mapboxgl.Popup({offset:18,anchor:'bottom',maxWidth:'260px',closeButton:false,className:claseNota(n)}).setLngLat([n.lng,n.lat]);
+    pop3D = new maplibregl.Popup({offset:18,anchor:'bottom',maxWidth:'260px',closeButton:false,className:claseNota(n)}).setLngLat([n.lng,n.lat]);
     const m = {closePopup:()=>pop3D && pop3D.remove(), getPopup:()=>({setContent:d=>pop3D.setDOMContent(d)})};
     pop3D._notaId = n.id;
     pop3D.setDOMContent(contenidoNota(n,m)).addTo(mlMap);
@@ -3001,7 +2993,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
         if(pop3D && pop3D.isOpen() && pop3D._notaId===n.id){ pop3D.remove(); pop3D = null; return; }   // tocarla otra vez: se cierra
         abrirNota3D(n);
       });
-      notas3D.push(new mapboxgl.Marker({element:el}).setLngLat([n.lng,n.lat]).addTo(mlMap));
+      notas3D.push(new maplibregl.Marker({element:el}).setLngLat([n.lng,n.lat]).addTo(mlMap));
     });
   }
   const refrescar3D = ()=>{ if(mlMap && mlMap.getSource('mz')) mlMap.getSource('mz').setData(manzanasGeoJSON()); etiquetas3D(); notasEn3D(); };
@@ -3011,7 +3003,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
     // la manzana seleccionada se deselecciona si queda fuera del territorio elegido
     if(popMz3D && sel3D){ const f = features.find(z=>z._id===sel3D); if(!f || f.properties.territorio!==terrAbierta) popMz3D.remove(); }
     etiquetas3D(); return x; };
-  // Búsqueda → nota: además del mapa oculto, se abre en Mapbox
+  // Búsqueda → nota: además del mapa oculto, se abre en MapLibre
   const rin = irANota; irANota = function(n){ const x = rin.apply(this,arguments); if(activo) abrirNota3D(n); return x; };
   const rn = renderNotas; renderNotas = function(){ const x = rn.apply(this,arguments); notasEn3D(); return x; };
   // Colocar o mover una nota tocando la vista 3D (igual que en el mapa normal)
@@ -3042,10 +3034,10 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
       if(popSalon3D) popSalon3D.remove();
       const d = document.createElement('div'); d.className = 'pop';
       d.innerHTML = '<b>'+SALON_REINO.titulo+'</b><a class="go" href="'+gmapsUrl(L.marker([SALON_REINO.lat,SALON_REINO.lng]))+'" target="_blank" rel="noopener">🧭 ¿Cómo llegar?</a>';
-      popSalon3D = new mapboxgl.Popup({offset:18,anchor:'bottom',maxWidth:'260px',closeButton:false}).setLngLat([SALON_REINO.lng,SALON_REINO.lat]).setDOMContent(d).addTo(mlMap);
+      popSalon3D = new maplibregl.Popup({offset:18,anchor:'bottom',maxWidth:'260px',closeButton:false}).setLngLat([SALON_REINO.lng,SALON_REINO.lat]).setDOMContent(d).addTo(mlMap);
       centrarEnPopup(popSalon3D);
     });
-    salon3D = new mapboxgl.Marker({element:el}).setLngLat([SALON_REINO.lng,SALON_REINO.lat]).addTo(mlMap);
+    salon3D = new maplibregl.Marker({element:el}).setLngLat([SALON_REINO.lng,SALON_REINO.lat]).addTo(mlMap);
   }
   const rs = irAlSalon; irAlSalon = function(){
     const x = rs.apply(this,arguments);
@@ -3074,7 +3066,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
   a.setAttribute('role','button'); a.setAttribute('aria-label',t);
   L.DomEvent.disableClickPropagation(a);
   L.DomEvent.on(a,'click',ev=>{ L.DomEvent.preventDefault(ev); if(caminando) salir(); else entrar(); });   // otra vez: vuelve al modo normal
-  // Hermanos conectados en el mapa Mapbox (modo normal y caminata)
+  // Hermanos conectados en el mapa MapLibre (modo normal y caminata)
   const personasML = {};
   window.personas3D = lista=>{
     if(!mlMap) return;
@@ -3085,7 +3077,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
       if(!m){
         const el = document.createElement('div'); el.className = 'persona-ico';
         el.innerHTML = '<div class="pp"></div><div class="pn"></div>';
-        m = personasML[p.id] = new mapboxgl.Marker({element:el,anchor:'top',offset:[0,-8]});
+        m = personasML[p.id] = new maplibregl.Marker({element:el,anchor:'top',offset:[0,-8]});
       }
       m.getElement().querySelector('.pn').textContent = p.nombre;
       m.setLngLat([p.lng,p.lat]);
@@ -3095,7 +3087,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
   };
   window.irAPersona3D = p=>{ if(!mlMap) return; siguiendo = false; mlMap.easeTo({center:[p.lng,p.lat],zoom:Math.max(mlMap.getZoom(),16),duration:800}); };
   window.alCambiarOjo = ()=>etiquetas3D();
-  const listo = iniciar();   // Mapbox como mapa del modo normal desde el inicio
+  const listo = iniciar();   // MapLibre como mapa del modo normal desde el inicio
   listo.then(ok=>{ if(ok && mlMap) mlMap.once('idle',()=>window.ocultarCarga()); else window.ocultarCarga(); }).catch(()=>window.ocultarCarga());
   /* Enlace de "🏁 Asignar": modo caminata a zoom 16 centrado en la manzana, seleccionada y con su popup.
      No sigue el GPS (siguiendo = false) para que nada mueva la vista; cualquier acción del usuario funciona normal. */
