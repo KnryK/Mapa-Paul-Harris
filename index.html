@@ -2591,6 +2591,8 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
 (function(){
   const ML_JS  = 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.js';
   const ML_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.css';
+  const PMTILES_JS = 'https://unpkg.com/pmtiles@4.5.0/dist/pmtiles.js';
+  const OVERTURE_BUILDINGS = 'pmtiles://https://overturemaps-extras-us-west-2.s3.us-west-2.amazonaws.com/tiles/2026-09-23.0/buildings.pmtiles';
   const ESTILO_OFM = 'https://tiles.openfreemap.org/styles/liberty';
   /* Edificios: en 2D planos (estilo Liberty); en caminata se levantan en 3D (capas fill-extrusion del mismo estilo) */
   function aplicarModo3D(){
@@ -2606,7 +2608,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
 
   const SVG_SALIR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
   let alNorte = false;   // tras el 1er toque de la brújula, el 2º toque vuelve a centrar y seguir
-  let cargando = null, mlMap = null, puck = null, puckEl = null, watchId = null;
+  let cargando = null, pmtilesCargando = null, pmtilesProtocol = null, mlMap = null, puck = null, puckEl = null, watchId = null;
   let activo = false, caminando = false, siguiendo = false, pos = null, rumbo = null, rumboGps = null, ultimoGiro = 0;
   const cont = document.createElement('div');
   cont.id = 'nav3d';
@@ -2630,6 +2632,34 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
       document.head.appendChild(s);
     });
     return cargando;
+  }
+
+  function registrarPMTiles(){
+    if(!window.pmtiles || !window.maplibregl) throw new Error('PMTiles/MapLibre no disponibles');
+    if(pmtilesProtocol) return;
+    pmtilesProtocol = new pmtiles.Protocol();
+    maplibregl.addProtocol('pmtiles', pmtilesProtocol.tile);
+  }
+
+  function cargarPMTiles(){
+    if(window.pmtiles){ registrarPMTiles(); return Promise.resolve(); }
+    if(pmtilesCargando) return pmtilesCargando;
+    pmtilesCargando = new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src=PMTILES_JS;
+      s.onload=()=>{ try{ registrarPMTiles(); res(); }catch(e){ pmtilesCargando=null; rej(e); } };
+      s.onerror=()=>{pmtilesCargando=null;rej(new Error('No se pudo cargar PMTiles'));};
+      document.head.appendChild(s);
+    });
+    return pmtilesCargando;
+  }
+
+  function anadirEdificiosOverture(){
+    if(!mlMap || !mlMap.isStyleLoaded() || !window.pmtiles) return;
+    if(!mlMap.getSource('overture-buildings')) mlMap.addSource('overture-buildings',{type:'vector',url:OVERTURE_BUILDINGS,attribution:'© Overture Maps Foundation'});
+    const primerTexto=(mlMap.getStyle().layers||[]).find(l=>l.type==='symbol');
+    if(!mlMap.getLayer('overture-buildings-fill')) mlMap.addLayer({id:'overture-buildings-fill',type:'fill',source:'overture-buildings','source-layer':'building',minzoom:12,paint:{'fill-color':'#d8d4cc','fill-opacity':0.52,'fill-antialias':true}},primerTexto?primerTexto.id:undefined);
+    if(!mlMap.getLayer('overture-buildings-3d')) mlMap.addLayer({id:'overture-buildings-3d',type:'fill-extrusion',source:'overture-buildings','source-layer':'building',minzoom:12,layout:{visibility:caminando?'visible':'none'},paint:{'fill-extrusion-color':'#d2cec6','fill-extrusion-opacity':0.82,'fill-extrusion-height':['coalesce',['to-number',['get','height']],['*',['to-number',['coalesce',['get','num_floors'],['get','level'],0]],3.2],8],'fill-extrusion-base':['coalesce',['to-number',['get','min_height']],0]}});
   }
 
   // Mosaicos del mismo estilo de fondo que el mapa normal
@@ -2696,6 +2726,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
     let estiloOk = false;
     mlMap.on('style.load',()=>{
       estiloOk = true;
+      anadirEdificiosOverture();
       if(!mlMap.getSource('mz')) mlMap.addSource('mz',{type:'geojson',data:manzanasGeoJSON()});
       if(!mlMap.getLayer('mz-fill')){
         const primerTexto = (mlMap.getStyle().layers||[]).find(l=>l.type==='symbol');
@@ -2828,7 +2859,7 @@ window.addEventListener('hashchange',abrirManzanaDeEnlace);
      queda el mapa Leaflet de siempre como respaldo. */
   async function iniciar(){
     if(activo) return true;
-    try{ await cargarLib(); }catch(e){ return false; }
+    try{ await cargarLib(); await cargarPMTiles(); }catch(e){ return false; }
     if(activo) return true;
     const c = map.getCenter();
     crearMapa([c.lng,c.lat],map.getZoom()-DZ,map.getBearing());
